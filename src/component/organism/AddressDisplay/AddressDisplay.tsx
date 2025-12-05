@@ -24,7 +24,9 @@ export const AddressDisplay: React.FC<AddressDisplayProps> = ({
             <div className={styles.addressWrapper}>
                 <div className={styles.addressInputWrapper}>
                     {address && (
-                        copied ? <IconCheck size={16} stroke={2} className={styles.checkIcon} /> : <IconCopy size={16} stroke={2} className={styles.copyIcon} onClick={onCopy} />
+                        copied
+                            ? <IconCheck size={16} stroke={2} className={styles.checkIcon} />
+                            : <IconCopy size={16} stroke={2} className={styles.copyIcon} onClick={onCopy} />
                     )}
                     <Input
                         type="text"
