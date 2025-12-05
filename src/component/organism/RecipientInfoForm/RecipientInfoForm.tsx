@@ -7,6 +7,7 @@ import styles from './RecipientInfoForm.module.css'
 import clsx from 'clsx'
 import { isValidEmail, isValidPhoneFormat } from '@/util/validation'
 import { formatPhoneNumber, filterKoreanOnly } from '@/util/formatting'
+import { defaultRecipientInfo } from '@/constant/Inventory.constant'
 
 
 export interface RecipientInfoFormProps {
@@ -21,16 +22,7 @@ export const RecipientInfoForm: React.FC<RecipientInfoFormProps> = ({
   onClose,
 }) => {
 
-  const [formData, setFormData] = useState<RecipientInfo>({
-    name: '',
-    email: '',
-    phone: '',
-    postalCode: '',
-    address: '',
-    emailConsent: false,
-    kakaoConsent: false,
-    termsConsent: false
-  })
+  const [formData, setFormData] = useState<RecipientInfo>(defaultRecipientInfo)
 
   const [isPhoneVerified, setIsPhoneVerified] = useState(false)
 
