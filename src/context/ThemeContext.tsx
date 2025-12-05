@@ -19,7 +19,6 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     setMounted(true)
-    // 클라이언트 사이드에서만 실행
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme') as Theme | null
       if (savedTheme) {
@@ -41,7 +40,6 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'))
   }
 
-  // mounted 상태와 관계없이 항상 같은 구조를 반환
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}

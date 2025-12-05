@@ -22,7 +22,6 @@ import { useSaveRecipientInfo } from '@/hooks/useRecipientInfoMutations'
 import { copyToClipboard } from '@/util/clipboard'
 
 export const InventoryManagementContainer = () => {
-    // 모든 useState를 먼저 선언
     const [appliedSearchQuery, setAppliedSearchQuery] = useState('')
     const [appliedSearchFilter, setAppliedSearchFilter] = useState<SEARCH_FILTER_TYPE>(SEARCH_FILTER_TYPE.PRODUCT_NAME)
     const [copied, setCopied] = useState(false)
@@ -33,10 +32,8 @@ export const InventoryManagementContainer = () => {
     const [isInventoryDetailModalOpen, setIsInventoryDetailModalOpen] = useState(false)
     const [inventoryDetail, setInventoryDetail] = useState<InventoryItem | null>(null)
 
-    // 모든 ref를 선언
     const currentPageRef = useRef(currentPage)
 
-    // 모든 커스텀 hooks를 선언
     const resetMutation = useResetData()
     const saveRecipientInfoMutation = useSaveRecipientInfo(() => {
         setIsRecipientInfoModalOpen(false)
@@ -45,7 +42,6 @@ export const InventoryManagementContainer = () => {
         setIsInventoryDetailModalOpen(false)
     })
 
-    // currentPage가 변경될 때마다 ref 업데이트
     useEffect(() => {
         currentPageRef.current = currentPage
     }, [currentPage])
