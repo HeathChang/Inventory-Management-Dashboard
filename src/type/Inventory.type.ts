@@ -10,7 +10,7 @@ export interface InventoryItem {
 }
 
 export interface RecipientInfo {
-    id?: string
+    id: string
     name: string
     email: string
     phone: string
