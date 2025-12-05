@@ -8,12 +8,14 @@ import { Button } from '@/component/atom/Button/Button'
 
 export interface InventoryDetailInfoProps {
   inventoryItem: InventoryItem | null
+  hasRecipientInfo?: boolean
   onClose?: () => void
   onConfirm?: (inventoryItem: InventoryItem) => void
 }
 
 export const InventoryDetailInfo: React.FC<InventoryDetailInfoProps> = ({
   inventoryItem,
+  hasRecipientInfo = false,
   onClose,
   onConfirm,
 }) => {
@@ -87,6 +89,7 @@ export const InventoryDetailInfo: React.FC<InventoryDetailInfoProps> = ({
             }
           }}
           className={styles.confirmButton}
+          disabled={!hasRecipientInfo}
         >
           사용하기
         </Button>

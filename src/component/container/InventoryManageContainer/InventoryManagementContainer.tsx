@@ -186,6 +186,7 @@ export const InventoryManagementContainer = () => {
             >
                 <InventoryDetailInfo
                     inventoryItem={inventoryDetail}
+                    hasRecipientInfo={!!recipientInfoData?.id}
                     onClose={() => setIsInventoryDetailModalOpen(false)}
                     onConfirm={handleUseInventoryItem}
                 />
