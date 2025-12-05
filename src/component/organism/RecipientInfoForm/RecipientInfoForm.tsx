@@ -9,16 +9,12 @@ import clsx from 'clsx'
 
 export interface RecipientInfoFormProps {
   initialData?: RecipientInfo
-  onPhoneVerify?: () => void
-  onPostalCodeSearch?: () => void
   onClose?: () => void
   onSave?: (data: RecipientInfo) => void
 }
 
 export const RecipientInfoForm: React.FC<RecipientInfoFormProps> = ({
   initialData,
-  onPhoneVerify,
-  onPostalCodeSearch,
   onSave,
   onClose,
 }) => {
@@ -129,9 +125,7 @@ export const RecipientInfoForm: React.FC<RecipientInfoFormProps> = ({
       alert('휴대폰 번호 형식이 올바르지 않습니다. (000-0000-0000)')
       return
     }
-    // 형식이 올바른 경우에만 휴대폰 인증 완료 처리
     setIsPhoneVerified(true)
-    onPhoneVerify?.()
   }
 
 
@@ -201,7 +195,6 @@ export const RecipientInfoForm: React.FC<RecipientInfoFormProps> = ({
           <Button
             variant="secondary"
             size="medium"
-            onClick={onPostalCodeSearch}
             className={styles.postalButton}
             disabled={true}
           >

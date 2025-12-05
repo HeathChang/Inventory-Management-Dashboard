@@ -9,6 +9,9 @@ export enum INVENTORY_FILTER_TYPE {
     OLDEST
 }
 
+export enum SEARCH_FILTER_TYPE {
+    PRODUCT_NAME
+}
 
 export const InventoryItemType = {
     [INVENTORY_ITEM_TYPE.ALL]: '전체아이템',
@@ -21,4 +24,17 @@ export const InventoryFilterType = {
     [INVENTORY_FILTER_TYPE.OLDEST]: '오래된 순',
 } as const
 
+export const SearchFilterType = {
+    [SEARCH_FILTER_TYPE.PRODUCT_NAME]: '상품명',
+} as const
 
+export const defaultRecipientInfo = {
+    name: '',
+    email: '',
+    phone: '',
+    postalCode: '',
+    address: '',
+    emailConsent: false,
+    kakaoConsent: false,
+    termsConsent: false,
+}

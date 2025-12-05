@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { QueryProvider } from '@/lib/QueryProvider'
 
 export const metadata: Metadata = {
   title: 'Toonation 2025',
@@ -11,12 +12,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-
-
-
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body>
+        <QueryProvider>{children}</QueryProvider>
+      </body>
     </html>
   )
 }

@@ -88,7 +88,12 @@
   position: absolute;
   right: 12px;
   color: #9ca3af;
-  pointer-events: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.searchIcon:hover {
+  color: #3b82f6;
 }
 
 .sortWrapper {

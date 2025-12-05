@@ -1,26 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { IconSearch } from '@tabler/icons-react'
 import { Dropdown, DropdownOption } from '@/component/atom/Dropdown/Dropdown'
 import { Tab } from '@/component/atom/Tab/Tab'
 import { Input } from '@/component/atom/Input/Input'
 import { Button } from '@/component/atom/Button/Button'
-import { INVENTORY_ITEM_TYPE, INVENTORY_FILTER_TYPE, InventoryItemType, InventoryFilterType } from '@/constant/Inventory.constant'
+import { INVENTORY_ITEM_TYPE, INVENTORY_FILTER_TYPE, SEARCH_FILTER_TYPE, InventoryItemType, InventoryFilterType, SearchFilterType } from '@/constant/Inventory.constant'
 import styles from './FilterSection.module.css'
 
 export type FilterTabType = INVENTORY_ITEM_TYPE
 export type SortType = INVENTORY_FILTER_TYPE
+export type SearchFilterTabType = SEARCH_FILTER_TYPE
 
 export interface FilterSectionProps {
   activeFilter: FilterTabType
   sortBy: SortType
   onFilterChange: (filter: FilterTabType) => void
   onSortChange: (sort: SortType) => void
-  searchQuery: string
-  searchFilter: string
-  searchFilterOptions: DropdownOption[]
-  onSearchQueryChange: (query: string) => void
-  onSearchFilterChange: (filter: string) => void
-  onSearch: () => void
+  onSearch: (query: string, filter: string) => void
 }
 
 const filterTabs: { value: FilterTabType; label: string }[] = [
@@ -34,22 +30,32 @@ const sortOptions: { value: string; label: string }[] = [
   { value: INVENTORY_FILTER_TYPE.OLDEST.toString(), label: InventoryFilterType[INVENTORY_FILTER_TYPE.OLDEST] },
 ]
 
+const searchFilterOptions: DropdownOption[] = [
+  { value: SEARCH_FILTER_TYPE.PRODUCT_NAME.toString(), label: SearchFilterType[SEARCH_FILTER_TYPE.PRODUCT_NAME] },
+]
+
 export const FilterSection: React.FC<FilterSectionProps> = ({
   activeFilter,
   sortBy,
   onFilterChange,
   onSortChange,
-  searchQuery,
-  searchFilter,
-  searchFilterOptions,
-  onSearchQueryChange,
-  onSearchFilterChange,
   onSearch,
 }) => {
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchFilter, setSearchFilter] = useState<SearchFilterTabType>(SEARCH_FILTER_TYPE.PRODUCT_NAME)
+
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      onSearch()
+      onSearch(searchQuery, searchFilter.toString())
     }
+  }
+
+  const handleSearchClick = () => {
+    onSearch(searchQuery, searchFilter.toString())
+  }
+
+  const handleSearchFilterChange = (value: string) => {
+    setSearchFilter(Number(value) as SearchFilterTabType)
   }
 
   return (
@@ -67,19 +73,25 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
           <div className={styles.searchInputWrapper}>
             <Dropdown
               options={searchFilterOptions}
-              value={searchFilter}
-              onChange={onSearchFilterChange}
+              value={searchFilter.toString()}
+              onChange={handleSearchFilterChange}
               className={styles.searchFilter}
             />
             <Input
               type="text"
               placeholder="검색"
               value={searchQuery}
-              onChange={(e) => onSearchQueryChange(e.target.value)}
+              onChange={(e) => setSearchQuery(e.target.value)}
               onKeyPress={handleKeyPress}
               className={styles.searchInput}
             />
-            <IconSearch size={16} stroke={2} className={styles.searchIcon} />
+            <IconSearch
+              size={16}
+              stroke={2}
+              className={styles.searchIcon}
+              onClick={handleSearchClick}
+              style={{ cursor: 'pointer' }}
+            />
           </div>
         </div>
 
