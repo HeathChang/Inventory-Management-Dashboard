@@ -1,85 +1,71 @@
 import fs from 'fs'
 import path from 'path'
+import { InventoryItem, RecipientInfo } from '@/type/Inventory.type'
 
 const DATA_DIR = path.join(process.cwd(), 'data')
 
-// 인벤토리 아이템 파일 경로
 const INVENTORY_FILE = path.join(DATA_DIR, 'inventory.json')
 const INVENTORY_BACKUP_FILE = path.join(DATA_DIR, 'inventory.backup.json')
 
-// 수령정보 파일 경로
 const RECIPIENT_INFO_FILE = path.join(DATA_DIR, 'recipient-info.json')
 const RECIPIENT_INFO_BACKUP_FILE = path.join(DATA_DIR, 'recipient-info.backup.json')
 
-// 인벤토리 아이템 읽기
-export function getInventoryItems() {
+export function getInventoryItems(): InventoryItem[] {
     try {
         const fileContent = fs.readFileSync(INVENTORY_FILE, 'utf-8')
         return JSON.parse(fileContent)
-    } catch (error) {
-        console.error('Error reading inventory file:', error)
+    } catch {
         return []
     }
 }
 
-// 인벤토리 아이템 저장
-export function saveInventoryItems(items: any[]) {
+export function saveInventoryItems(items: InventoryItem[]): boolean {
     try {
         fs.writeFileSync(INVENTORY_FILE, JSON.stringify(items, null, 2), 'utf-8')
         return true
-    } catch (error) {
-        console.error('Error saving inventory file:', error)
+    } catch {
         return false
     }
 }
 
-// 인벤토리 아이템 삭제
-export function deleteInventoryItem(id: number) {
+export function deleteInventoryItem(id: number): boolean {
     const items = getInventoryItems()
-    const filteredItems = items.filter((item: any) => item.id !== id)
+    const filteredItems = items.filter((item: InventoryItem) => item.id !== id)
     return saveInventoryItems(filteredItems)
 }
 
-// 수령정보 읽기
-export function getRecipientInfo() {
+export function getRecipientInfo(): RecipientInfo | null {
     try {
         const fileContent = fs.readFileSync(RECIPIENT_INFO_FILE, 'utf-8')
         return JSON.parse(fileContent)
-    } catch (error) {
-        console.error('Error reading recipient info file:', error)
+    } catch {
         return null
     }
 }
 
-// 수령정보 저장
-export function saveRecipientInfo(info: any) {
+export function saveRecipientInfo(info: RecipientInfo): boolean {
     try {
         fs.writeFileSync(RECIPIENT_INFO_FILE, JSON.stringify(info, null, 2), 'utf-8')
         return true
-    } catch (error) {
-        console.error('Error saving recipient info file:', error)
+    } catch {
         return false
     }
 }
 
-// 초기화: 백업 파일에서 복원
-export function resetData() {
+export function resetData(): boolean {
     try {
-        // 인벤토리 복원
         if (fs.existsSync(INVENTORY_BACKUP_FILE)) {
             const backupContent = fs.readFileSync(INVENTORY_BACKUP_FILE, 'utf-8')
             fs.writeFileSync(INVENTORY_FILE, backupContent, 'utf-8')
         }
 
-        // 수령정보 복원
         if (fs.existsSync(RECIPIENT_INFO_BACKUP_FILE)) {
             const backupContent = fs.readFileSync(RECIPIENT_INFO_BACKUP_FILE, 'utf-8')
             fs.writeFileSync(RECIPIENT_INFO_FILE, backupContent, 'utf-8')
         }
 
         return true
-    } catch (error) {
-        console.error('Error resetting data:', error)
+    } catch {
         return false
     }
 }

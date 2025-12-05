@@ -5,13 +5,7 @@
   color: var(--text-primary);
   min-width: 760px;
 }
+
 .container {
     margin-top: 12px;
-}
-
-.pageLoading {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }

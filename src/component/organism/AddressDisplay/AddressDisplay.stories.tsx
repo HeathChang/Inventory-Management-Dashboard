@@ -19,8 +19,8 @@ export const Default: Story = {
   args: {
     address: '69668170DAFB724B',
     copied: false,
-    onCopy: () => console.log('Copy clicked'),
-    onModifyReceipt: () => console.log('Modify receipt clicked'),
+    onCopy: () => {},
+    onModifyReceipt: () => {},
   },
 }
 
@@ -46,8 +46,8 @@ export const Interactive: Story = {
   args: {
     address: '69668170DAFB724B',
     copied: false,
-    onCopy: () => console.log('Copy clicked'),
-    onModifyReceipt: () => console.log('Modify receipt clicked'),
+    onCopy: () => {},
+    onModifyReceipt: () => {},
   },
 }
 

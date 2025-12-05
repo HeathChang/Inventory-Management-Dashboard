@@ -20,7 +20,6 @@ export interface FetchInventoryParams {
   searchFilter: SEARCH_FILTER_TYPE
 }
 
-// 인벤토리 아이템 목록 조회 (서버 사이드 필터링/정렬/페이지네이션)
 export const fetchInventoryItems = async (
   params: FetchInventoryParams
 ): Promise<PaginatedInventoryResponse> => {
@@ -39,8 +38,7 @@ export const fetchInventoryItems = async (
     const response = await fetch(`/api/inventory?${queryParams.toString()}`)
     if (!response.ok) throw new Error('Failed to fetch inventory items')
     return await response.json()
-  } catch (error) {
-    console.error('Error fetching inventory items:', error)
+  } catch {
     return {
       items: [],
       pagination: {
@@ -53,20 +51,17 @@ export const fetchInventoryItems = async (
   }
 }
 
-// 인벤토리 아이템 삭제
 export const deleteInventoryItem = async (id: number): Promise<boolean> => {
   try {
     const response = await fetch(`/api/inventory/${id}`, {
       method: 'DELETE',
     })
     return response.ok
-  } catch (error) {
-    console.error('Error deleting inventory item:', error)
+  } catch {
     return false
   }
 }
 
-// 수령정보 조회
 export const fetchRecipientInfo = async (): Promise<RecipientInfo | null> => {
   try {
     const response = await fetch('/api/recipient-info')
@@ -76,13 +71,11 @@ export const fetchRecipientInfo = async (): Promise<RecipientInfo | null> => {
       return null
     }
     return data
-  } catch (error) {
-    console.error('Error fetching recipient info:', error)
+  } catch {
     return null
   }
 }
 
-// 수령정보 저장/수정
 export const saveRecipientInfo = async (
   data: RecipientInfo,
   isUpdate: boolean = false
@@ -100,21 +93,18 @@ export const saveRecipientInfo = async (
       return result.data || data
     }
     return null
-  } catch (error) {
-    console.error('Error saving recipient info:', error)
+  } catch {
     return null
   }
 }
 
-// 데이터 초기화
 export const resetData = async (): Promise<boolean> => {
   try {
     const response = await fetch('/api/reset', {
       method: 'POST',
     })
     return response.ok
-  } catch (error) {
-    console.error('Error resetting data:', error)
+  } catch {
     return false
   }
 }

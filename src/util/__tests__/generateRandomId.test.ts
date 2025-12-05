@@ -28,8 +28,6 @@ describe('generateRandomId', () => {
                 ids.add(generateRandomId())
             }
 
-            // 100번 호출했을 때 대부분 다른 값이 생성되어야 함
-            // 완전히 랜덤이므로 일부 중복은 가능하지만, 대부분은 달라야 함
             expect(ids.size).toBeGreaterThan(iterations * 0.9)
         })
 
@@ -38,7 +36,6 @@ describe('generateRandomId', () => {
             const id2 = generateRandomId()
             const id3 = generateRandomId()
 
-            // 세 개 모두 다른 값이어야 함 (매우 낮은 확률로 같을 수 있지만 거의 불가능)
             expect(id1).not.toBe(id2)
             expect(id2).not.toBe(id3)
             expect(id1).not.toBe(id3)

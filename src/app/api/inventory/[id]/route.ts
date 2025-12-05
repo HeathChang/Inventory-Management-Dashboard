@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { deleteInventoryItem, getInventoryItems, saveInventoryItems } from '@/lib/fileStorage'
+import { deleteInventoryItem } from '@/lib/fileStorage'
 
-// DELETE: 인벤토리 아이템 삭제 (사용하기)
 export async function DELETE(
     request: NextRequest,
     { params }: { params: { id: string } }
@@ -29,8 +28,7 @@ export async function DELETE(
                 { status: 500 }
             )
         }
-    } catch (error) {
-        console.error('Error deleting inventory item:', error)
+    } catch {
         return NextResponse.json(
             { error: 'Failed to delete inventory item' },
             { status: 500 }

@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { resetData } from '@/lib/fileStorage'
 
-// POST: 데이터 초기화
 export async function POST() {
     try {
         const success = resetData()
@@ -17,8 +16,7 @@ export async function POST() {
                 { status: 500 }
             )
         }
-    } catch (error) {
-        console.error('Error resetting data:', error)
+    } catch {
         return NextResponse.json(
             { error: 'Failed to reset data' },
             { status: 500 }

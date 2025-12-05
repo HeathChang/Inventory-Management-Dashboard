@@ -30,7 +30,7 @@ export const Interactive: Story = {
     name: '배송 아이템 상품명',
     description: '클릭하면 상세 정보를 볼 수 있습니다. 이 설명은 두 줄까지 표시되며, 더 긴 내용은 생략됩니다.',
     validityPeriod: '2025.01.15까지',
-    onClick: () => console.log('Card clicked'),
+    onClick: () => {},
   },
 }
 

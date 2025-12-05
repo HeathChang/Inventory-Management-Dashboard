@@ -23,7 +23,6 @@
   transform: scale(0.98);
 }
 
-/* Variants */
 .primary {
   background-color: var(--button-primary);
   color: white;
@@ -52,7 +51,6 @@
   color: var(--button-text-hover);
 }
 
-/* Sizes */
 .small {
   padding: 6px 12px;
   font-size: 12px;

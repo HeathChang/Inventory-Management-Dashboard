@@ -7,7 +7,7 @@ export interface InventoryItem {
     description: string
     validityPeriod: string
     message: string
-}   
+}
 
 export interface RecipientInfo {
     id?: string
@@ -19,4 +19,4 @@ export interface RecipientInfo {
     emailConsent: boolean
     kakaoConsent: boolean
     termsConsent: boolean
-  }
+}

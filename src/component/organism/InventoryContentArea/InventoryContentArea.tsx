@@ -1,11 +1,12 @@
 import React from 'react'
 import { Label } from '@/component/atom/Label/Label'
 import { EmptyImage } from '@/component/atom/EmptyImage/EmptyImage'
+import { InventoryItem } from '@/type/Inventory.type'
 import styles from './InventoryContentArea.module.css'
 
 export interface InventoryContentAreaProps {
-  items?: any[]
-  onItemClick: (item: any) => void
+  items?: InventoryItem[]
+  onItemClick: (item: InventoryItem) => void
 }
 
 export const InventoryContentArea: React.FC<InventoryContentAreaProps> = ({

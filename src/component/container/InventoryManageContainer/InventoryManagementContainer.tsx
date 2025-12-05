@@ -19,17 +19,16 @@ import {
 } from '@/lib/api/inventory.api'
 import { useDeleteInventoryItem, useResetData } from '@/hooks/useInventoryMutations'
 import { useSaveRecipientInfo } from '@/hooks/useRecipientInfoMutations'
+import { copyToClipboard } from '@/util/clipboard'
 
 export const InventoryManagementContainer = () => {
     const [appliedSearchQuery, setAppliedSearchQuery] = useState('')
     const [appliedSearchFilter, setAppliedSearchFilter] = useState<SEARCH_FILTER_TYPE>(SEARCH_FILTER_TYPE.PRODUCT_NAME)
     const [copied, setCopied] = useState(false)
 
-    // 필터 및 정렬 상태
     const [activeFilter, setActiveFilter] = useState<INVENTORY_ITEM_TYPE>(INVENTORY_ITEM_TYPE.ALL)
     const [sortBy, setSortBy] = useState<INVENTORY_FILTER_TYPE>(INVENTORY_FILTER_TYPE.NEWEST)
 
-    // 페이지네이션 상태
     const [currentPage, setCurrentPage] = useState(1)
 
     const {
@@ -63,12 +62,10 @@ export const InventoryManagementContainer = () => {
 
     const handleCopyAddress = async () => {
         if (recipientInfoData?.id) {
-            try {
-                await navigator.clipboard.writeText(recipientInfoData.id)
+            const success = await copyToClipboard(recipientInfoData.id)
+            if (success) {
                 setCopied(true)
                 setTimeout(() => setCopied(false), 2000)
-            } catch (err) {
-                console.error('Failed to copy:', err)
             }
         }
     }
@@ -77,10 +74,8 @@ export const InventoryManagementContainer = () => {
     const [isInventoryDetailModalOpen, setIsInventoryDetailModalOpen] = useState(false)
     const [inventoryDetail, setInventoryDetail] = useState<InventoryItem | null>(null)
 
-    // 데이터 초기화 mutation
     const resetMutation = useResetData()
 
-    // 데이터 초기화 핸들러
     const handleReset = () => {
         if (!confirm('모든 데이터를 초기 상태로 되돌리시겠습니까?')) {
             return
@@ -88,23 +83,19 @@ export const InventoryManagementContainer = () => {
         resetMutation.mutate()
     }
 
-    // 수령정보 저장 mutation
     const saveRecipientInfoMutation = useSaveRecipientInfo(() => {
         setIsRecipientInfoModalOpen(false)
     })
 
-    // 수령정보 모달 확인 (저장된 데이터를 받아서 처리)
     const handleSaveRecipientInfo = (data: RecipientInfo) => {
         const isUpdate = (recipientInfoData?.name ?? '') !== '' || (recipientInfoData?.email ?? '') !== ''
         saveRecipientInfoMutation.mutate({ data, isUpdate })
     }
 
-    // 인벤토리 삭제 mutation
     const deleteMutation = useDeleteInventoryItem(() => {
         setIsInventoryDetailModalOpen(false)
     })
 
-    // 삭제 후 현재 페이지에 아이템이 없으면 이전 페이지로 이동
     useEffect(() => {
         const items = inventoryData?.items || []
         const totalPages = inventoryData?.pagination.totalPages || 0
@@ -113,33 +104,28 @@ export const InventoryManagementContainer = () => {
         }
     }, [inventoryData, currentPage])
 
-    // 인벤토리 상세 모달 사용하기
     const handleUseInventoryItem = () => {
         if (!inventoryDetail) return
         deleteMutation.mutate(inventoryDetail.id)
     }
 
-    // 페이지 변경 핸들러
     const handlePageChange = (page: number) => {
         setCurrentPage(page)
     }
 
-    // 아이템 클릭시, 사용 모달 노출
     const handleItemClick = (item: InventoryItem) => {
         setInventoryDetail(item);
         setIsInventoryDetailModalOpen(true)
     }
 
-    // 필터/정렬/검색 변경 시 페이지 리셋
     useEffect(() => {
         setCurrentPage(1)
     }, [activeFilter, sortBy, appliedSearchQuery, appliedSearchFilter])
 
-
     if (isInventoryLoading || isRecipientInfoLoading) {
         return (
             <main className={styles.main}>
-                <Loading className={styles.pageLoading} />
+                <Loading />
             </main>
         )
     }
@@ -181,7 +167,6 @@ export const InventoryManagementContainer = () => {
                 />
             </div>
 
-            {/* 수령정보입력 모달 */}
             <Modal
                 isOpen={isRecipientInfoModalOpen}
                 onClose={() => setIsRecipientInfoModalOpen(false)}
@@ -194,7 +179,6 @@ export const InventoryManagementContainer = () => {
                 />
             </Modal>
 
-            {/* 인벤토리 상세 모달 */}
             <Modal
                 isOpen={isInventoryDetailModalOpen}
                 onClose={() => setIsInventoryDetailModalOpen(false)}
