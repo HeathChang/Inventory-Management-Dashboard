@@ -17,6 +17,14 @@
   gap: 12px;
 }
 
+.themeToggleButton {
+  min-width: 40px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .resetButton {
   white-space: nowrap;
 }

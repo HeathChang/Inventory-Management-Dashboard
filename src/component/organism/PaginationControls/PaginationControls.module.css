@@ -23,6 +23,6 @@
 .currentPage {
   font-size: 14px;
   font-weight: 600;
-  color: #3b82f6;
+  color: var(--info);
 }
 

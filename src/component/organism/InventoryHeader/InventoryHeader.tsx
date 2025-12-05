@@ -1,6 +1,10 @@
+'use client'
+
 import React from 'react'
+import { IconSun, IconMoon } from '@tabler/icons-react'
 import { Breadcrumb } from '@/component/atom/Breadcrumb/Breadcrumb'
 import { Button } from '@/component/atom/Button/Button'
+import { useTheme } from '@/context/ThemeContext'
 import styles from './InventoryHeader.module.css'
 
 export interface InventoryHeaderProps {
@@ -8,6 +12,8 @@ export interface InventoryHeaderProps {
 }
 
 export const InventoryHeader: React.FC<InventoryHeaderProps> = ({ onReset }) => {
+  const { theme, toggleTheme } = useTheme()
+
   return (
     <header className={styles.header}>
       <div className={styles.leftSection}>
@@ -18,8 +24,21 @@ export const InventoryHeader: React.FC<InventoryHeaderProps> = ({ onReset }) => 
           ]}
         />
       </div>
-      {onReset && (
-        <div className={styles.rightSection}>
+      <div className={styles.rightSection}>
+        <Button
+          variant="ghost"
+          size="medium"
+          onClick={toggleTheme}
+          className={styles.themeToggleButton}
+          aria-label={theme === 'light' ? '다크 모드로 전환' : '라이트 모드로 전환'}
+        >
+          {theme === 'light' ? (
+            <IconMoon size={20} stroke={2} />
+          ) : (
+            <IconSun size={20} stroke={2} />
+          )}
+        </Button>
+        {onReset && (
           <Button
             variant="secondary"
             size="medium"
@@ -28,8 +47,8 @@ export const InventoryHeader: React.FC<InventoryHeaderProps> = ({ onReset }) => 
           >
             초기화
           </Button>
-        </div>
-      )}
+        )}
+      </div>
     </header>
   )
 }

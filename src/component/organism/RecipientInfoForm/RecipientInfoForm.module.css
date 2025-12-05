@@ -45,14 +45,14 @@
   gap: 4px;
   cursor: pointer;
   font-size: 14px;
-  color: #374151;
+  color: var(--text-primary);
 }
 
 .checkbox {
   width: 14px;
   height: 14px;
   cursor: pointer;
-  accent-color: #3b82f6;
+  accent-color: var(--info);
 }
 
 .checkboxLabel span {
@@ -64,21 +64,21 @@
   justify-content: space-between;
   gap: 6px;
   padding: 16px 0px;
-  background-color: white;
-  border-top: 1px solid #e5e7eb;
+  background-color: var(--bg-primary);
+  border-top: 1px solid var(--border-primary);
   border-radius: 0 0 8px 8px;
 }
 
 .closeButton {
   min-width: 80px;
-  background-color: white;
-  color: #6b7280;
-  border: 1px solid #d1d5db;
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-primary);
 }
 
 .closeButton:hover:not(:disabled) {
-  background-color: #f3f4f6;
-  border-color: #9ca3af;
+  background-color: var(--bg-tertiary);
+  border-color: var(--border-secondary);
 }
 
 .confirmButton {

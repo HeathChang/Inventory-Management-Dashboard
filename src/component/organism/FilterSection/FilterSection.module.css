@@ -19,9 +19,9 @@
 .searchInputWrapper {
   display: flex;
   align-items: center;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-primary);
   border-radius: 6px;
-  background-color: white;
+  background-color: var(--input-bg);
   padding: 0;
   position: relative;
   width: 100%;
@@ -41,7 +41,7 @@
   border: none;
   border-radius: 6px 0 0 6px;
   background-color: transparent;
-  color: #6b7280;
+  color: var(--text-secondary);
   padding: 10px 12px;
   font-size: 14px;
 }
@@ -52,19 +52,19 @@
 }
 
 .searchFilter .dropdownMenu {
-  background-color: white;
-  border: 1px solid #e5e7eb;
-  color: #111827;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  color: var(--text-primary);
+  box-shadow: 0 2px 8px var(--card-shadow);
 }
 
 .searchFilter .dropdownItem {
-  color: #111827;
+  color: var(--text-primary);
   font-size: 14px;
 }
 
 .searchFilter .dropdownItem:hover {
-  background-color: #f3f4f6;
+  background-color: var(--bg-tertiary);
 }
 
 .searchInput {
@@ -73,6 +73,7 @@
   padding: 10px 40px 10px 12px;
   background-color: transparent;
   font-size: 14px;
+  color: var(--text-primary);
 }
 
 .searchInput:focus {
@@ -81,19 +82,19 @@
 }
 
 .searchInput::placeholder {
-  color: #9ca3af;
+  color: var(--input-placeholder);
 }
 
 .searchIcon {
   position: absolute;
   right: 12px;
-  color: #9ca3af;
+  color: var(--icon-primary);
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
 .searchIcon:hover {
-  color: #3b82f6;
+  color: var(--icon-hover);
 }
 
 .sortWrapper {
@@ -108,6 +109,6 @@
 .filterTabs {
   display: flex;
   gap: 0;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border-primary);
 }
 

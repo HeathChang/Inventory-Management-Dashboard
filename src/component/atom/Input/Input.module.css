@@ -1,22 +1,22 @@
 .input {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--input-border);
   border-radius: 4px;
-  background-color: white;
-  color: #111827;
+  background-color: var(--input-bg);
+  color: var(--text-primary);
   font-size: 14px;
   font-family: inherit;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .input::placeholder {
-  color: #9ca3af;
+  color: var(--input-placeholder);
 }
 
 .input:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: var(--input-focus);
 }
 
 .input:disabled {
@@ -25,18 +25,18 @@
 }
 
 .error {
-  border-color: #ef4444;
+  border-color: var(--error);
 }
 
 .error:focus {
-  border-color: #ef4444;
+  border-color: var(--error);
 }
 
 .success {
-  border-color: #10b981;
+  border-color: var(--success);
 }
 
 .success:focus {
-  border-color: #10b981;
+  border-color: var(--success);
 }
 
