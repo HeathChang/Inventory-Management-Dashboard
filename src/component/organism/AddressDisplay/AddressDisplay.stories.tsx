@@ -27,19 +27,11 @@ export const Default: Story = {
 export const Interactive: Story = {
   render: (args) => {
     const [copied, setCopied] = useState(false)
-    
-    const handleCopy = () => {
-      if (args.address) {
-        navigator.clipboard.writeText(args.address).then(() => {
-          setCopied(true)
-          args.onCopy?.()
-          setTimeout(() => setCopied(false), 2000)
-        })
-      }
-    }
 
-    const handleModifyReceipt = () => {
-      args.onModifyReceipt?.()
+    const handleCopy = () => {
+      setCopied(true)
+      args.onCopy?.()
+      setTimeout(() => setCopied(false), 2000)
     }
 
     return (
@@ -47,7 +39,7 @@ export const Interactive: Story = {
         address={args.address}
         copied={copied}
         onCopy={handleCopy}
-        onModifyReceipt={handleModifyReceipt}
+        onModifyReceipt={args.onModifyReceipt}
       />
     )
   },
