@@ -22,15 +22,28 @@ import { useSaveRecipientInfo } from '@/hooks/useRecipientInfoMutations'
 import { copyToClipboard } from '@/util/clipboard'
 
 export const InventoryManagementContainer = () => {
+    // 모든 useState를 먼저 선언
     const [appliedSearchQuery, setAppliedSearchQuery] = useState('')
     const [appliedSearchFilter, setAppliedSearchFilter] = useState<SEARCH_FILTER_TYPE>(SEARCH_FILTER_TYPE.PRODUCT_NAME)
     const [copied, setCopied] = useState(false)
-
     const [activeFilter, setActiveFilter] = useState<INVENTORY_ITEM_TYPE>(INVENTORY_ITEM_TYPE.ALL)
     const [sortBy, setSortBy] = useState<INVENTORY_FILTER_TYPE>(INVENTORY_FILTER_TYPE.NEWEST)
-
     const [currentPage, setCurrentPage] = useState(1)
+    const [isRecipientInfoModalOpen, setIsRecipientInfoModalOpen] = useState(false)
+    const [isInventoryDetailModalOpen, setIsInventoryDetailModalOpen] = useState(false)
+    const [inventoryDetail, setInventoryDetail] = useState<InventoryItem | null>(null)
+
+    // 모든 ref를 선언
     const currentPageRef = useRef(currentPage)
+
+    // 모든 커스텀 hooks를 선언
+    const resetMutation = useResetData()
+    const saveRecipientInfoMutation = useSaveRecipientInfo(() => {
+        setIsRecipientInfoModalOpen(false)
+    })
+    const deleteMutation = useDeleteInventoryItem(() => {
+        setIsInventoryDetailModalOpen(false)
+    })
 
     // currentPage가 변경될 때마다 ref 업데이트
     useEffect(() => {
@@ -76,12 +89,6 @@ export const InventoryManagementContainer = () => {
         }
     }
 
-    const [isRecipientInfoModalOpen, setIsRecipientInfoModalOpen] = useState(false)
-    const [isInventoryDetailModalOpen, setIsInventoryDetailModalOpen] = useState(false)
-    const [inventoryDetail, setInventoryDetail] = useState<InventoryItem | null>(null)
-
-    const resetMutation = useResetData()
-
     const handleReset = () => {
         if (!confirm('모든 데이터를 초기 상태로 되돌리시겠습니까?')) {
             return
@@ -89,18 +96,10 @@ export const InventoryManagementContainer = () => {
         resetMutation.mutate()
     }
 
-    const saveRecipientInfoMutation = useSaveRecipientInfo(() => {
-        setIsRecipientInfoModalOpen(false)
-    })
-
     const handleSaveRecipientInfo = (data: RecipientInfo) => {
         const isUpdate = (recipientInfoData?.name ?? '') !== '' || (recipientInfoData?.email ?? '') !== ''
         saveRecipientInfoMutation.mutate({ data, isUpdate })
     }
-
-    const deleteMutation = useDeleteInventoryItem(() => {
-        setIsInventoryDetailModalOpen(false)
-    })
 
     useEffect(() => {
         const items = inventoryData?.items || []
