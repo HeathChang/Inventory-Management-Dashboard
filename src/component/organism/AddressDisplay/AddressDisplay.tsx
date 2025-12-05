@@ -1,7 +1,7 @@
 import React from 'react'
+import { IconCheck, IconCopy } from '@tabler/icons-react'
 import { Label } from '@/component/atom/Label/Label'
 import { Input } from '@/component/atom/Input/Input'
-import { Icon } from '@/component/atom/Icon/Icon'
 import styles from './AddressDisplay.module.css'
 import { Button } from '@/component/atom/Button/Button'
 
@@ -23,14 +23,15 @@ export const AddressDisplay: React.FC<AddressDisplayProps> = ({
             <Label className={styles.addressLabel}>내주소</Label>
             <div className={styles.addressWrapper}>
                 <div className={styles.addressInputWrapper}>
-                    {address && <Icon type="copy" size={16} onClick={onCopy} className={styles.copyIcon} />}
+                    {address && (
+                        copied ? <IconCheck size={16} stroke={2} className={styles.checkIcon} /> : <IconCopy size={16} stroke={2} className={styles.copyIcon} onClick={onCopy} />
+                    )}
                     <Input
                         type="text"
                         value={address}
                         readOnly
                         className={styles.addressInput}
                     />
-                    {copied && <span className={styles.copiedText}>복사됨!</span>}
                 </div>
                 <Button
                     variant="primary"

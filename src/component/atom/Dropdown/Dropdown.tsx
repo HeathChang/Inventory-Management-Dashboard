@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { IconChevronDown } from '@tabler/icons-react'
 import styles from './Dropdown.module.css'
-import { Icon } from '../Icon/Icon'
 import clsx from 'clsx'
 
 export interface DropdownOption {
@@ -62,7 +62,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
         <span className={styles.dropdownValue}>
           {selectedOption ? selectedOption.label : placeholder}
         </span>
-        <Icon type="chevron-down" size={16} />
+        <IconChevronDown size={16} stroke={2} />
       </button>
       {isOpen && (
         <div className={styles.dropdownMenu}>

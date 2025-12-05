@@ -1,4 +1,4 @@
-export function generateRandomId(): string {
+export const generateRandomId = (): string => {
     const chars = '0123456789ABCDEF'
     let result = ''
     for (let i = 0; i < 16; i++) {

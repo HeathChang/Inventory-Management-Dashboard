@@ -40,6 +40,12 @@
   color: #3b82f6;
 }
 
+.checkIcon {
+  flex-shrink: 0;
+  cursor: pointer;
+  color: #10b981;
+}
+
 .addressInput {
   flex: 1;
   min-width: 0;

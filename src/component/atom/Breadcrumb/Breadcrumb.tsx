@@ -1,6 +1,6 @@
 import React from 'react'
+import { IconChevronRight } from '@tabler/icons-react'
 import styles from './Breadcrumb.module.css'
-import { Icon } from '../Icon/Icon'
 
 export interface BreadcrumbItem {
   label: string
@@ -21,7 +21,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
       <ol className={styles.breadcrumbList}>
         {items.map((item, index) => (
           <li key={index} className={styles.breadcrumbItem}>
-            {index > 0 && <Icon type="chevron-right" size={18} />}
+            {index > 0 && <IconChevronRight size={18} stroke={2} />}
             {item.href ? (
               <a href={item.href} className={styles.breadcrumbLink}>
                 {item.label}

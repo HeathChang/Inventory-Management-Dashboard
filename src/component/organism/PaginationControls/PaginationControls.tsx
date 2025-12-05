@@ -1,6 +1,6 @@
 import React from 'react'
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
 import { Button } from '@/component/atom/Button/Button'
-import { Icon } from '@/component/atom/Icon/Icon'
 import styles from './PaginationControls.module.css'
 
 export interface PaginationControlsProps {
@@ -35,7 +35,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
         disabled={!canGoPrevious}
         className={styles.pageButton}
       >
-        <Icon type="chevron-left" size={16} />
+        <IconChevronLeft size={16} stroke={2} />
       </Button>
       <div className={styles.pageNumber}>
         <span className={styles.currentPage}>{currentPage}</span>
@@ -47,7 +47,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
         disabled={!canGoNext}
         className={styles.pageButton}
       >
-        <Icon type="chevron-right" size={16} />
+        <IconChevronRight size={16} stroke={2} />
       </Button>
       <Button
         variant="ghost"

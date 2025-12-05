@@ -1,9 +1,9 @@
 import React from 'react'
+import { IconSearch } from '@tabler/icons-react'
 import { Dropdown, DropdownOption } from '@/component/atom/Dropdown/Dropdown'
 import { Tab } from '@/component/atom/Tab/Tab'
 import { Input } from '@/component/atom/Input/Input'
 import { Button } from '@/component/atom/Button/Button'
-import { Icon } from '@/component/atom/Icon/Icon'
 import { INVENTORY_ITEM_TYPE, INVENTORY_FILTER_TYPE, InventoryItemType, InventoryFilterType } from '@/constant/Inventory.constant'
 import styles from './FilterSection.module.css'
 
@@ -79,7 +79,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
               onKeyPress={handleKeyPress}
               className={styles.searchInput}
             />
-            <Icon type="search" size={16} className={styles.searchIcon} />
+            <IconSearch size={16} stroke={2} className={styles.searchIcon} />
           </div>
         </div>
 
