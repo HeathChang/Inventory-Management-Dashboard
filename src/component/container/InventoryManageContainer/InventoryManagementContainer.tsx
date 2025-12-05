@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { InventoryHeader } from '@/component/organism/InventoryHeader/InventoryHeader'
 import { AddressDisplay } from '@/component/organism/AddressDisplay/AddressDisplay'
@@ -30,6 +30,12 @@ export const InventoryManagementContainer = () => {
     const [sortBy, setSortBy] = useState<INVENTORY_FILTER_TYPE>(INVENTORY_FILTER_TYPE.NEWEST)
 
     const [currentPage, setCurrentPage] = useState(1)
+    const currentPageRef = useRef(currentPage)
+
+    // currentPage가 변경될 때마다 ref 업데이트
+    useEffect(() => {
+        currentPageRef.current = currentPage
+    }, [currentPage])
 
     const {
         data: inventoryData,
@@ -99,10 +105,11 @@ export const InventoryManagementContainer = () => {
     useEffect(() => {
         const items = inventoryData?.items || []
         const totalPages = inventoryData?.pagination.totalPages || 0
-        if (items.length === 0 && currentPage > 1 && totalPages > 0) {
-            setCurrentPage(currentPage - 1)
+        const page = currentPageRef.current
+        if (items.length === 0 && page > 1 && totalPages > 0) {
+            setCurrentPage(Math.max(1, page - 1))
         }
-    }, [inventoryData, currentPage])
+    }, [inventoryData])
 
     const handleUseInventoryItem = () => {
         if (!inventoryDetail) return
