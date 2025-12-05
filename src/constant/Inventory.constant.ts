@@ -38,3 +38,5 @@ export const defaultRecipientInfo = {
     kakaoConsent: false,
     termsConsent: false,
 }
+
+export const ITEMS_PER_PAGE = 10

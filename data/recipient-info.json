@@ -1,11 +1,11 @@
 {
-  "name": "장현수",
-  "email": "jannhyun@gmail.com",
-  "phone": "010-2488-9287",
-  "postalCode": "06319",
-  "address": "1dong 401ho",
-  "emailConsent": true,
-  "kakaoConsent": true,
-  "termsConsent": true,
-  "id": "462BBB456B6CA550"
+  "name": "",
+  "email": "",
+  "phone": "",
+  "postalCode": "",
+  "address": "",
+  "emailConsent": false,
+  "kakaoConsent": false,
+  "termsConsent": false
 }
+

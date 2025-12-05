@@ -11,7 +11,7 @@ import { RecipientInfoForm } from '@/component/organism/RecipientInfoForm/Recipi
 import { InventoryDetailInfo } from '@/component/organism/InventoryDetailInfo/InventoryDetailInfo'
 import { Loading } from '@/component/atom/Loading/Loading'
 import styles from './InventoryManagementContainer.module.css'
-import { defaultRecipientInfo, INVENTORY_FILTER_TYPE, INVENTORY_ITEM_TYPE, SEARCH_FILTER_TYPE, InventoryItemType } from '@/constant/Inventory.constant'
+import { defaultRecipientInfo, INVENTORY_FILTER_TYPE, INVENTORY_ITEM_TYPE, SEARCH_FILTER_TYPE, ITEMS_PER_PAGE } from '@/constant/Inventory.constant'
 import { InventoryItem, RecipientInfo } from '@/type/Inventory.type'
 import {
     fetchInventoryItems,
@@ -31,14 +31,21 @@ export const InventoryManagementContainer = () => {
 
     // 페이지네이션 상태
     const [currentPage, setCurrentPage] = useState(1)
-    const [totalPages] = useState(1)
 
     const {
-        data: items = [],
+        data: inventoryData,
         isLoading: isInventoryLoading,
     } = useQuery({
-        queryKey: ['inventory'],
-        queryFn: fetchInventoryItems,
+        queryKey: ['inventory', currentPage, activeFilter, sortBy, appliedSearchQuery, appliedSearchFilter],
+        queryFn: () => fetchInventoryItems({
+            page: currentPage,
+            limit: ITEMS_PER_PAGE,
+            filterType: activeFilter,
+            sortBy: sortBy,
+            searchQuery: appliedSearchQuery,
+            searchFilter: appliedSearchFilter,
+        }),
+        staleTime: 60 * 1000
     })
 
     const {
@@ -97,6 +104,15 @@ export const InventoryManagementContainer = () => {
         setIsInventoryDetailModalOpen(false)
     })
 
+    // 삭제 후 현재 페이지에 아이템이 없으면 이전 페이지로 이동
+    useEffect(() => {
+        const items = inventoryData?.items || []
+        const totalPages = inventoryData?.pagination.totalPages || 0
+        if (items.length === 0 && currentPage > 1 && totalPages > 0) {
+            setCurrentPage(currentPage - 1)
+        }
+    }, [inventoryData, currentPage])
+
     // 인벤토리 상세 모달 사용하기
     const handleUseInventoryItem = () => {
         if (!inventoryDetail) return
@@ -109,44 +125,15 @@ export const InventoryManagementContainer = () => {
     }
 
     // 아이템 클릭시, 사용 모달 노출
-    const handleItemClick = (item: any) => {
+    const handleItemClick = (item: InventoryItem) => {
         setInventoryDetail(item);
         setIsInventoryDetailModalOpen(true)
     }
 
-    // 필터/정렬 변경 시 페이지 리셋
+    // 필터/정렬/검색 변경 시 페이지 리셋
     useEffect(() => {
         setCurrentPage(1)
-    }, [activeFilter, sortBy])
-
-    // 필터 및 정렬된 아이템 계산
-    const filteredItems = items
-        .filter((item) => {
-            const matchesFilter = (() => {
-                switch (activeFilter) {
-                    case INVENTORY_ITEM_TYPE.GIFTICON:
-                        return item.filterType === InventoryItemType[INVENTORY_ITEM_TYPE.GIFTICON]
-                    case INVENTORY_ITEM_TYPE.DELIVERY:
-                        return item.filterType === InventoryItemType[INVENTORY_ITEM_TYPE.DELIVERY]
-                    default:
-                        return true
-                }
-            })()
-
-            const matchesSearch = appliedSearchQuery.trim() === '' ||
-                (appliedSearchFilter === SEARCH_FILTER_TYPE.PRODUCT_NAME && item.name.toLowerCase().includes(appliedSearchQuery.toLowerCase()))
-
-            return matchesFilter && matchesSearch
-        })
-        .sort((a, b) => {
-            const aTime = new Date(a.validityPeriod).getTime()
-            const bTime = new Date(b.validityPeriod).getTime()
-
-            if (Number.isNaN(aTime) || Number.isNaN(bTime)) {
-                return 0
-            }
-            return sortBy === INVENTORY_FILTER_TYPE.NEWEST ? bTime - aTime : aTime - bTime
-        })
+    }, [activeFilter, sortBy, appliedSearchQuery, appliedSearchFilter])
 
 
     if (isInventoryLoading || isRecipientInfoLoading) {
@@ -182,14 +169,14 @@ export const InventoryManagementContainer = () => {
             </div>
             <div className={styles.container}>
                 <InventoryContentArea
-                    items={filteredItems}
+                    items={inventoryData?.items || []}
                     onItemClick={handleItemClick}
                 />
             </div>
             <div className={styles.container}>
                 <PaginationControls
                     currentPage={currentPage}
-                    totalPages={totalPages}
+                    totalPages={inventoryData?.pagination.totalPages || 0}
                     onPageChange={handlePageChange}
                 />
             </div>

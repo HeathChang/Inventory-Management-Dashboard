@@ -7,6 +7,7 @@ export const useDeleteInventoryItem = (onSuccess?: () => void) => {
   return useMutation({
     mutationFn: deleteInventoryItem,
     onSuccess: () => {
+      // 삭제 시 모든 인벤토리 관련 쿼리 캐시 무효화 (모든 페이지, 필터, 정렬 조합)
       queryClient.invalidateQueries({ queryKey: ['inventory'] })
       onSuccess?.()
     },

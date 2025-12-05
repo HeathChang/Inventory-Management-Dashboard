@@ -1,14 +1,55 @@
 import { InventoryItem, RecipientInfo } from '@/type/Inventory.type'
+import { INVENTORY_ITEM_TYPE, INVENTORY_FILTER_TYPE, SEARCH_FILTER_TYPE } from '@/constant/Inventory.constant'
 
-// 인벤토리 아이템 목록 조회
-export const fetchInventoryItems = async (): Promise<InventoryItem[]> => {
+export interface PaginatedInventoryResponse {
+  items: InventoryItem[]
+  pagination: {
+    page: number
+    limit: number
+    totalItems: number
+    totalPages: number
+  }
+}
+
+export interface FetchInventoryParams {
+  page: number
+  limit: number
+  filterType: INVENTORY_ITEM_TYPE
+  sortBy: INVENTORY_FILTER_TYPE
+  searchQuery: string
+  searchFilter: SEARCH_FILTER_TYPE
+}
+
+// 인벤토리 아이템 목록 조회 (서버 사이드 필터링/정렬/페이지네이션)
+export const fetchInventoryItems = async (
+  params: FetchInventoryParams
+): Promise<PaginatedInventoryResponse> => {
   try {
-    const response = await fetch('/api/inventory')
+    const { page, limit, filterType, sortBy, searchQuery, searchFilter } = params
+
+    const queryParams = new URLSearchParams({
+      page: page.toString(),
+      limit: limit.toString(),
+      filterType: filterType.toString(),
+      sortBy: sortBy.toString(),
+      searchQuery: searchQuery,
+      searchFilter: searchFilter.toString(),
+    })
+
+    const response = await fetch(`/api/inventory?${queryParams.toString()}`)
     if (!response.ok) throw new Error('Failed to fetch inventory items')
     return await response.json()
   } catch (error) {
     console.error('Error fetching inventory items:', error)
-    return []
+    return {
+      items: [],
+      pagination: {
+        page: 1,
+        limit: 10,
+        totalItems: 0,
+        totalPages: 0,
+      },
+    }
   }
 }
 

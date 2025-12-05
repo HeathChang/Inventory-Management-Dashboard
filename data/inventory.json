@@ -90,6 +90,16 @@
     "message": "투네이션 노래방 쿠폰 12장"
   },
   {
+    "id": 13,
+    "type": "노래방",
+    "filterType": "기프티콘",
+    "name": "투네이션 노래방 쿠폰 13장",
+    "imageUrl": "https://picsum.photos/id/320/200/200",
+    "description": "노래방 후원에 필요한 쿠폰입니다.",
+    "validityPeriod": "2027-12-22 14:25:35",
+    "message": "투네이션 노래방 쿠폰 13장"
+  },
+  {
     "id": 14,
     "type": "노래방",
     "filterType": "기프티콘",
@@ -138,7 +148,7 @@
     "description": "노래방 후원에 필요한 쿠폰입니다.",
     "validityPeriod": "2027-12-22 14:25:40",
     "message": "투네이션 노래방 쿠폰 18장"
-  },
+  },  
   {
     "id": 19,
     "type": "노래방",
