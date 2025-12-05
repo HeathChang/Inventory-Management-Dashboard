@@ -29,6 +29,7 @@ export const SearchFilterType = {
 } as const
 
 export const defaultRecipientInfo = {
+    id: '',
     name: '',
     email: '',
     phone: '',
