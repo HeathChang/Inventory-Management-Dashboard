@@ -1,0 +1,28 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px 0;
+}
+
+.pageButton {
+  min-width: 32px;
+  height: 32px;
+  padding: 0;
+}
+
+.pageNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 32px;
+}
+
+.currentPage {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3b82f6;
+}
+

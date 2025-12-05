@@ -1,0 +1,13 @@
+.EmptyImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+  user-select: none;
+}
+
+.EmptyImage svg {
+  max-width: 100%;
+  height: auto;
+}
+
